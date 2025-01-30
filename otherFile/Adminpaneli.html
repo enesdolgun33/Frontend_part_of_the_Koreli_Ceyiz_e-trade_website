@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Paneli</title>
+  <link rel="stylesheet" href="Adminpaneli.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Admin Paneli</h1>
+    <form>
+      <label for="product-name">Ürün Adı:</label>
+      <input type="text" id="product-name" placeholder="Ürün adı giriniz">
+
+      <label for="product-price">Ürün Fiyatı:</label>
+      <input type="number" id="product-price" placeholder="Ürün fiyatı giriniz">
+
+      <label for="product-quantity">Ürün Adeti:</label>
+      <input type="number" id="product-quantity" placeholder="Ürün adeti giriniz">
+
+      <label for="product-image" class="file-upload-label">Ürün Fotoğrafı Seçin</label>
+      <input type="file" id="product-image" accept="image/*" style="display:none;" onchange="updateFileName()">
+      
+      <span id="file-name">Fotoğraf Seçilmedi</span>
+
+      <button type="submit">Kaydet</button>
+    </form>
+  </div>
+
+  <script>
+    // Dosya seçildiğinde ismini güncelleyen fonksiyon
+    function updateFileName() {
+      const fileInput = document.getElementById('product-image');
+      const fileName = fileInput.files[0] ? fileInput.files[0].name : 'Fotoğraf Seçilmedi';
+      document.getElementById('file-name').textContent = fileName;
+    }
+
+    // Formu submit ettikten sonra bilgileri konsola yazdırır
+    document.querySelector('form').addEventListener('submit', function(e) {
+      e.preventDefault(); // Formun sayfayı yenilemesini engeller
+
+      const productName = document.getElementById('product-name').value;
+      const productPrice = document.getElementById('product-price').value;
+      const productQuantity = document.getElementById('product-quantity').value;
+      const productImage = document.getElementById('product-image').files[0];
+
+      console.log("Ürün Adı:", productName);
+      console.log("Ürün Fiyatı:", productPrice);
+      console.log("Ürün Adeti:", productQuantity);
+      if (productImage) {
+        const imageURL = URL.createObjectURL(productImage); 
+        console.log("Ürün Fotoğrafı URL:", imageURL);
+      }
+
+      // Formu sıfırlayıp fotoğraf ismini sıfırlar
+      document.querySelector('form').reset();
+      document.getElementById('file-name').textContent = 'Fotoğraf Seçilmedi';
+    });
+  </script>
+</body>
+</html>
